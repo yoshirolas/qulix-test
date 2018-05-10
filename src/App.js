@@ -30,7 +30,7 @@ class App extends Component {
       console.log(user);
       console.log(profile);
       console.log(access_token);
-      if (user) {
+      if (access_token) {
         this.setState({
           showLogIn: false,
         });
@@ -40,7 +40,7 @@ class App extends Component {
           loading: false,
         }) 
       }
-    }, 4000)
+    }, 3000)
   }
 
   succsessResponseGoogle = (response) => {
