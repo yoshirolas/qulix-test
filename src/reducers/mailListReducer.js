@@ -1,20 +1,25 @@
-// const initialState = {
-//   user: null,
-//   access_token: null,
-// }
-
 
 function mailListReducer (state = [], action) {
   switch (action.type) {
 
     case 'GET_MAIL_LIST': {
-    	console.log('HERE')
-    	console.log(action.payload.length)
+
       return action.payload
     }
 
+    case 'GET_SEARCHED_MAIL_LIST': {
+      
+      let newState = [];
+      action.payload.forEach((item) => {
+        const searchedMail = state.find(mail => mail.data.id === item.id);
+        if (searchedMail) newState.push(searchedMail)
+      })
+
+      return newState;
+    }
+
     default:
-    	console.log('default')
+
       return state;
   }
 }

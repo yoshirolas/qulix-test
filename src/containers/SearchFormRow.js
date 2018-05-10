@@ -1,14 +1,42 @@
 import React, { Component } from 'react';
+import { searchByMailList } from '../actions/appActions';
+import { connect } from 'react-redux';
 
 class SearchFormRow extends Component {
+   constructor(props) {
+    super(props);
+    this.state = {
+      searchQuery: null,
+    }   
+  }
+
+  handleSearchQueryChange = (event) => {
+    this.setState({
+      searchQuery: event.target.value,
+    });
+  }
+
+  handleStartSearching = () => {
+    this.props.dispatch(searchByMailList(this.state.searchQuery));
+  }
+
   render() {
     return (
       <div className="searchForm row">
         <div className="col-sm-14">
           <form name="search" action="#" method="get" className="form-inline form-search pull-left">
             <div className="input-group">
-              <input className="form-control" type="text" name="search" placeholder="Search..."/>
-              <a href="#" className="btn btn-search">
+              <input 
+                className="form-control" 
+                type="text" name="search" 
+                placeholder="Search..."
+                onChange={ this.handleSearchQueryChange }
+              />
+              <a 
+                href="#" 
+                className="btn btn-search"
+                onClick={ this.handleStartSearching }
+              >
                 <i className="icon-search"></i>
               </a>
             </div>
@@ -44,4 +72,4 @@ class SearchFormRow extends Component {
   }
 }
 
-export default SearchFormRow;
+export default connect()(SearchFormRow);

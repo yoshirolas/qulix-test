@@ -18,7 +18,8 @@ class App extends Component {
     super(props);
     this.state = {
       showLogIn: true,
-      loading: true
+      loading: true,
+      access_token: null
     }   
   }
 
@@ -27,14 +28,13 @@ class App extends Component {
       const user = window.gapi.auth2.getAuthInstance().currentUser.get();
       const profile = user.getBasicProfile();
       const access_token = user.getAuthResponse().access_token;
-      console.log(user);
-      console.log(profile);
-      console.log(access_token);
+
       if (access_token) {
         this.setState({
           showLogIn: false,
+          access_token: access_token
         });
-        this.props.dispatch(asyncGetMailList(access_token))
+        this.props.dispatch(asyncGetMailList(this.state.access_token))
       } else {
         this.setState({
           loading: false,
@@ -45,6 +45,21 @@ class App extends Component {
 
   succsessResponseGoogle = (response) => {
     console.log(response);
+    const user = window.gapi.auth2.getAuthInstance().currentUser.get();
+    const profile = user.getBasicProfile();
+    const access_token = user.getAuthResponse().access_token;
+
+    if (access_token) {
+      this.setState({
+        showLogIn: false,
+        access_token: access_token
+      });
+      this.props.dispatch(asyncGetMailList(this.state.access_token))
+    } else {
+      this.setState({
+        loading: false,
+      }) 
+    }
     this.setState({
       showLogIn: false
     }) 
