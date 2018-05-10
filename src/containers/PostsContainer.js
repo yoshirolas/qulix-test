@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
 class PostsContainer extends Component {
+
   render() {
+
     return (
       <section className="postsContainer">
 
