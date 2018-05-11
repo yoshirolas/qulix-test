@@ -7,6 +7,7 @@ import Aside from './components/Aside';
 import Navbar from './components/Navbar';
 import SearchFormRow from './containers/SearchFormRow';
 import { asyncGetMailList } from './actions/appActions';
+import { asyncGetGeolocation } from './actions/appActions';
 import PostsContainer from './containers/PostsContainer';
 import GoogleLogin from 'react-google-login';
 
@@ -24,7 +25,7 @@ class App extends Component {
       loading: true,
       access_token: null,
       userName: 'User name',
-      userAvatarUrl: 'images/profile_mask.png'
+      userAvatarUrl: 'images/profile_mask.png',
     }   
   }
 
@@ -60,9 +61,14 @@ class App extends Component {
     }
   }
 
+  getGeolocation = () => {
+    this.props.dispatch(asyncGetGeolocation())
+  }
+
   componentDidMount() {
     this.getAccessToken();
     this.retryGetAccessToken();
+    this.getGeolocation();
   }
 
   succsessResponseGoogle = (response) => {
@@ -78,8 +84,9 @@ class App extends Component {
     return (
       <div>
         <Header 
-          userName={this.state.userName}
-          userAvatarUrl={this.state.userAvatarUrl}
+          userName={ this.state.userName }
+          userAvatarUrl={ this.state.userAvatarUrl }
+          location={ this.props.city }
         />
         <Navbar/>
         <main className="container main">
@@ -95,7 +102,9 @@ class App extends Component {
               onFailure={ this.failureResponseGoogle }
               className="controlButtons btn btn-default btn-prevNext"
             />
-            <Heading/>
+            <Heading
+              location={ this.props.city }
+            />
             <SearchFormRow
               accessToken={ this.state.access_token }
             />
@@ -109,4 +118,11 @@ class App extends Component {
   }
 }
 
-export default connect()(App);
+
+function mapStateToProps(state) {
+  return {
+    city: state.geolocationReducer,
+  }
+}
+
+export default connect(mapStateToProps)(App);

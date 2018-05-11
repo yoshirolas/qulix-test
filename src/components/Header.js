@@ -29,7 +29,15 @@ class Header extends Component {
             <div className="header-comp pull-right">
 
               <div className="dropdown">          
-                <a className="dropdown-toggle" className="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" href="#"><span>New York</span><i className="icon-down-open"></i></a>
+                <a 
+                  className="dropdown-toggle" 
+                  className="dropdownMenu1" 
+                  data-toggle="dropdown" 
+                  aria-expanded="true" 
+                  href="#">
+                  <span>{ this.props.location }</span>
+                  <i className="icon-down-open"></i>
+                </a>
                 <ul className="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                   <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Moscow</a></li>
                   <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Minsk</a></li>
