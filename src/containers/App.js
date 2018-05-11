@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Header from './components/Header';
-import Heading from './components/Heading';
-import Footer from './components/Footer';
-import Aside from './components/Aside';
-import Navbar from './components/Navbar';
-import SearchFormRow from './containers/SearchFormRow';
-import { asyncGetMailList } from './actions/appActions';
-import { asyncGetGeolocation } from './actions/appActions';
-import PostsContainer from './containers/PostsContainer';
+import Header from '../components/Header';
+import Heading from '../components/Heading';
+import Footer from '../components/Footer';
+import Aside from '../components/Aside';
+import Navbar from '../components/Navbar';
+import SearchFormRow from './SearchFormRow';
+import { asyncGetMailList } from '../actions/appActions';
+import { asyncGetGeolocation } from '../actions/appActions';
+import PostsContainer from './PostsContainer';
 import GoogleLogin from 'react-google-login';
 
 const logInBtnStyle = {
