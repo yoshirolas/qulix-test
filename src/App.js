@@ -28,55 +28,44 @@ class App extends Component {
     }   
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-      
-      const user = window.gapi.auth2.getAuthInstance().currentUser.get();
-      const profile = user.getBasicProfile();
-      const access_token = user.getAuthResponse().access_token;
-
-      if (access_token) {
-        const userName = profile.getGivenName();
-        const userAvatarUrl = profile.getImageUrl();
-        this.setState({
-          showLogIn: false,
-          access_token: access_token,
-          userName: userName,
-          userAvatarUrl: userAvatarUrl
-        });
-        this.props.dispatch(asyncGetMailList(this.state.access_token))
-      } else {
-        this.setState({
-          loading: false,
-        }) 
-      }
-    }, 3000)
-  }
-
-  succsessResponseGoogle = (response) => {
-
+  getAccessToken = () => {
+    if (!window.gapi) return;
     const user = window.gapi.auth2.getAuthInstance().currentUser.get();
     const profile = user.getBasicProfile();
     const access_token = user.getAuthResponse().access_token;
-
     if (access_token) {
-      const userName = profile.getGivenName();
-      const userAvatarUrl = profile.getImageUrl();
-      this.setState({
-        showLogIn: false,
-        access_token: access_token,
-        userName: userName,
-        userAvatarUrl: userAvatarUrl
-      });
-      this.props.dispatch(asyncGetMailList(this.state.access_token))
+    const userName = profile.getGivenName();
+    const userAvatarUrl = profile.getImageUrl();
+    this.setState({
+      showLogIn: false,
+      access_token: access_token,
+      userName: userName,
+      userAvatarUrl: userAvatarUrl
+    });
+    this.props.dispatch(asyncGetMailList(this.state.access_token))
     } else {
       this.setState({
         loading: false,
-      }) 
+      })
     }
-    this.setState({
-      showLogIn: false
-    }) 
+  }
+
+  retryGetAccessToken = () => {
+    if (this.state.access_token) {
+      return
+    } else {
+      this.getAccessToken();
+      setTimeout(this.retryGetAccessToken, 300)
+    }
+  }
+
+  componentDidMount() {
+    this.getAccessToken();
+    this.retryGetAccessToken();
+  }
+
+  succsessResponseGoogle = (response) => {
+    this.getAccessToken();
   }
 
   failureResponseGoogle = (response) => {
