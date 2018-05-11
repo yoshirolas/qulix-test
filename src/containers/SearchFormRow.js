@@ -6,7 +6,7 @@ class SearchFormRow extends Component {
    constructor(props) {
     super(props);
     this.state = {
-      searchQuery: null,
+      searchQuery: '',
     }   
   }
 
