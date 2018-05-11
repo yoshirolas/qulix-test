@@ -96,7 +96,9 @@ class App extends Component {
               className="controlButtons btn btn-default btn-prevNext"
             />
             <Heading/>
-            <SearchFormRow/>
+            <SearchFormRow
+              accessToken={ this.state.access_token }
+            />
             <PostsContainer/>
             <Footer/>
           </section>

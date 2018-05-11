@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { searchByMailList } from '../actions/appActions';
+import { asyncGetMailList } from '../actions/appActions';
 import { connect } from 'react-redux';
 
 class SearchFormRow extends Component {
@@ -17,7 +17,7 @@ class SearchFormRow extends Component {
   }
 
   handleStartSearching = () => {
-    this.props.dispatch(searchByMailList(this.state.searchQuery));
+    this.props.dispatch(asyncGetMailList(this.props.accessToken, this.state.searchQuery));
   }
 
   render() {
