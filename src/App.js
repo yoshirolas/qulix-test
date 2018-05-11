@@ -30,6 +30,7 @@ class App extends Component {
 
   getAccessToken = () => {
     if (!window.gapi) return;
+    if (!window.gapi.auth2) return;
     const user = window.gapi.auth2.getAuthInstance().currentUser.get();
     const profile = user.getBasicProfile();
     const access_token = user.getAuthResponse().access_token;

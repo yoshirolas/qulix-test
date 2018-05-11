@@ -13,14 +13,14 @@ export const asyncGetMailList = (access_token) => (dispatch) => {
     config
   )
   .then(res => {
-    res.data.messages.forEach(message => {
+    return res.data.messages.forEach(message => {
       const messageId = message.id;
       axios.get(
         `https://content.googleapis.com/gmail/v1/users/me/messages/${messageId}`,
         config
       )
       .then(res => {
-        mailList.push(res);
+        return mailList.push(res);
       })
     })
   })
@@ -30,7 +30,7 @@ export const asyncGetMailList = (access_token) => (dispatch) => {
         type: 'GET_MAIL_LIST',
         payload: mailList
       }) 
-    }, 3000)
+    }, 0)
   })
   .catch(err => console.log(err))
 }
